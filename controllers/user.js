@@ -57,7 +57,12 @@ function matchPassword(user, password) {
 
 async function profile(req, res) {
   try {
-    const token = req.cookies.auth_token;
+     let token = req.cookies.auth_token;
+    if (!token) {
+       const authHeader =
+         req.headers["authorization"] || req.headers["Authorization"];
+         token = authHeader;
+    }
     if (!token) {
       return res
         .status(401)

@@ -3,7 +3,12 @@ const userDb = require("../models/user");
 const { verifyToken } = require("../services/auth");
 async function addExpense(req, res) {
   try {
-     const token = req.cookies.auth_token;
+     let token = req.cookies.auth_token;
+     if (!token) {
+       const authHeader =
+         req.headers["authorization"] || req.headers["Authorization"];
+         token = authHeader;
+     }
      if (!token) {
        return res
          .status(401)
@@ -53,7 +58,12 @@ async function addExpense(req, res) {
 
 async function getExpense(req, res) {
   try {
-    const token = req.cookies.auth_token;
+    let token = req.cookies.auth_token;
+    if (!token) {
+      const authHeader =
+        req.headers["authorization"] || req.headers["Authorization"];
+        token = authHeader;
+    }
     if (!token) {
       return res
         .status(401)
@@ -76,7 +86,12 @@ async function getExpense(req, res) {
 
 async function updateUserById(req, res) {
   try {
-     const token = req.cookies.auth_token;
+     let token = req.cookies.auth_token;
+     if (!token) {
+       const authHeader =
+         req.headers["authorization"] || req.headers["Authorization"];
+        token = authHeader;
+     }
      if (!token) {
        return res
          .status(401)
@@ -109,7 +124,12 @@ async function updateUserById(req, res) {
 
 async function deleteExpense(req, res) {
   try {
-     const token = req.cookies.auth_token;
+     let token = req.cookies.auth_token;
+     if (!token) {
+       const authHeader =
+         req.headers["authorization"] || req.headers["Authorization"];
+       token = authHeader && authHeader.split(" ")[1];
+     }
      if (!token) {
        return res
          .status(401)

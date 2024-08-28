@@ -67,14 +67,14 @@ async function profile(req, res) {
     if (!decoded) {
       return res.status(401).json({ success: false, message: "unothorized" });
     }
-    const profileData = await userDb.findOne({ phone: decoded?.phone });
+    const profileData = await userDb.findOne(
+      { phone: decoded?.phone },
+      { fullName: 1, phone: 1, profileImage:1 }
+    );
     if (!profileData) {
       return res.status(401).json({ success: false, message: "unothorized" });
     }
-    const profileDataObject = profileData.toObject();
-    delete profileDataObject.password;
-    delete profileDataObject.salt;
-    res.json(profileDataObject);
+    res.json(profileData);
   } catch (error) {
     res.json({ success: false, message: "error happened" });
   }

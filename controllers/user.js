@@ -48,6 +48,19 @@ async function sininUser(req, res) {
   }
 }
 
+async function signOut(req, res) {
+  try {
+    res.cookie("auth_token", '', {
+      httpOnly: true,
+      secure: true, 
+      sameSite: "None",
+    });
+    return res.json({ success: true, token: '' });
+  } catch (error) {
+    return res.status(500).json({ success: false });
+  }
+}
+
 function matchPassword(user, password) {
   const salt = user.salt;
   const hashedPassword = createHmac("sha256", salt)
@@ -132,4 +145,5 @@ module.exports = {
   sininUser,
   profile,
   updateProfile,
+  signOut,
 };

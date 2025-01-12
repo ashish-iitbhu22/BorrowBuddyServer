@@ -4,6 +4,7 @@ const {
   sininUser,
   profile,
   updateProfile,
+  signOut,
 } = require("../controllers/user");
 
 const { imageUpload, upload } = require("../controllers/common");
@@ -12,6 +13,7 @@ const route = express.Router();
 
 route.route("/sinup").post(sinupUser);
 route.route("/sinin").post(sininUser);
+route.route("/sinOut").post(signOut);
 route.route("/profile").get(profile);
 route.route("/profile").post(updateProfile);
 route.route("/imageUpload").post(upload.single("img"), imageUpload);

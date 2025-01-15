@@ -25,6 +25,11 @@ async function imageUpload(req, res) {
     const filePath = req.file.path;
     const result = await cloudinary.uploader.upload(filePath, {
       public_id: path.parse(req.file.originalname).name,
+      transformation: [
+        {
+          quality: "auto",
+        },
+      ],
     });
 
     fs.unlink(filePath, (err) => {
